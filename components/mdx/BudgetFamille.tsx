@@ -1,7 +1,7 @@
 interface BudgetFamilleProps {
-  hebergement: number | string
-  repas: number | string
-  activites: number | string
+  hebergement?: number | string
+  repas?: number | string
+  activites?: number | string
   transport?: number | string
   transports?: number | string
   total?: string
@@ -15,22 +15,17 @@ interface BudgetLine {
   color: string
 }
 
-export default function BudgetFamille({
-  hebergement,
-  repas,
-  activites,
-  transport,
-  transports,
-  total,
-  note,
-}: BudgetFamilleProps) {
-  const transportValue = transport ?? transports
+export default function BudgetFamille(props: BudgetFamilleProps) {
+  const hebergement = props.hebergement ?? 0
+  const repas = props.repas ?? 0
+  const activites = props.activites ?? 0
+  const transportValue = props.transport ?? props.transports ?? 0
 
   const lines: BudgetLine[] = [
     { label: 'Hébergement', emoji: '🏨', value: hebergement, color: 'bg-terracotta' },
     { label: 'Repas', emoji: '🍽️', value: repas, color: 'bg-sage' },
     { label: 'Activités', emoji: '🎡', value: activites, color: 'bg-amber-400' },
-    { label: 'Transport', emoji: '🚗', value: transportValue ?? '', color: 'bg-blue-400' },
+    { label: 'Transport', emoji: '🚗', value: transportValue, color: 'bg-blue-400' },
   ]
 
   const allNumeric =
@@ -43,16 +38,15 @@ export default function BudgetFamille({
     ? (hebergement as number) + (repas as number) + (activites as number) + (transportValue as number)
     : null
 
-  const displayTotal = total ?? (numericTotal !== null ? `${numericTotal} €` : null)
+  const displayTotal = props.total ?? (numericTotal !== null && numericTotal > 0 ? `${numericTotal} €` : null)
 
   return (
     <div className="bg-white border border-sable-dark rounded-2xl overflow-hidden my-8 shadow-sm">
-      {/* Header */}
       <div className="bg-terracotta px-5 py-4">
         <h3 className="font-display font-bold text-white text-lg">
           💶 Budget estimé
         </h3>
-        {note && <p className="text-white/80 text-xs mt-1">{note}</p>}
+        {props.note && <p className="text-white/80 text-xs mt-1">{props.note}</p>}
       </div>
 
       <div className="p-5">
@@ -65,10 +59,14 @@ export default function BudgetFamille({
                   {line.label}
                 </span>
                 <span className="font-bold text-brun text-sm">
-                  {typeof line.value === 'number' ? `${line.value} €` : line.value}
+                  {typeof line.value === 'number' && line.value > 0
+                    ? `${line.value} €`
+                    : typeof line.value === 'string' && line.value
+                    ? line.value
+                    : null}
                 </span>
               </div>
-              {allNumeric && numericTotal !== null && (
+              {allNumeric && numericTotal !== null && numericTotal > 0 && (
                 <div className="h-2 bg-sable rounded-full overflow-hidden">
                   <div
                     className={`h-2 rounded-full ${line.color} transition-all duration-700`}

@@ -1,13 +1,23 @@
 import Image from 'next/image'
-import { GalleryImage } from '@/types'
 import clsx from 'clsx'
 
+interface GalleryImage {
+  src: string
+  alt: string
+  caption?: string
+}
+
 interface GalleryProps {
-  images: GalleryImage[]
+  images?: GalleryImage[]
   layout?: 'masonry' | 'grid'
 }
 
-export default function Gallery({ images, layout = 'grid' }: GalleryProps) {
+export default function Gallery(props: GalleryProps) {
+  const images = Array.isArray(props.images) ? props.images : []
+  const layout = props.layout ?? 'grid'
+
+  if (images.length === 0) return null
+
   if (layout === 'masonry') {
     return (
       <div className="columns-2 md:columns-3 gap-3 my-8" role="group" aria-label="Galerie photos">

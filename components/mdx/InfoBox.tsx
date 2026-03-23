@@ -1,14 +1,15 @@
-import { InfoBoxType } from '@/types'
 import clsx from 'clsx'
 
+type InfoBoxType = 'conseil' | 'budget' | 'attention' | 'famille' | 'transports' | 'info'
+
 interface InfoBoxProps {
-  type: InfoBoxType
+  type?: InfoBoxType | string
   emoji?: string
   title: string
   children: React.ReactNode
 }
 
-const styles: Record<InfoBoxType, { bg: string; border: string; icon: string }> = {
+const styles: Record<string, { bg: string; border: string; icon: string }> = {
   conseil: {
     bg: 'bg-sage/10',
     border: 'border-sage',
@@ -41,9 +42,12 @@ const styles: Record<InfoBoxType, { bg: string; border: string; icon: string }> 
   },
 }
 
-export default function InfoBox({ type, emoji, title, children }: InfoBoxProps) {
-  const style = styles[type]
-  const displayEmoji = emoji || style.icon
+const FALLBACK_STYLE = styles.conseil
+
+export default function InfoBox(props: InfoBoxProps) {
+  const safeType = props.type ?? 'conseil'
+  const style = styles[safeType] ?? FALLBACK_STYLE
+  const displayEmoji = props.emoji ?? style.icon
 
   return (
     <div
@@ -59,9 +63,9 @@ export default function InfoBox({ type, emoji, title, children }: InfoBoxProps) 
           {displayEmoji}
         </span>
         <div className="flex-1">
-          <p className="font-display font-bold text-brun mb-2">{title}</p>
+          <p className="font-display font-bold text-brun mb-2">{props.title}</p>
           <div className="text-brun-muted text-sm leading-relaxed [&>p]:mb-2 [&>p:last-child]:mb-0">
-            {children}
+            {props.children}
           </div>
         </div>
       </div>
