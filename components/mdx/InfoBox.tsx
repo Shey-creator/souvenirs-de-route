@@ -34,6 +34,11 @@ const styles: Record<InfoBoxType, { bg: string; border: string; icon: string }> 
     border: 'border-blue-300',
     icon: '🚗',
   },
+  info: {
+    bg: 'bg-blue-50',
+    border: 'border-blue-300',
+    icon: 'ℹ️',
+  },
 }
 
 export default function InfoBox({ type, emoji, title, children }: InfoBoxProps) {

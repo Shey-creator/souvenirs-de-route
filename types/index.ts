@@ -58,7 +58,7 @@ export interface MapMarker {
   lng: number
 }
 
-export type InfoBoxType = 'conseil' | 'budget' | 'attention' | 'famille' | 'transports'
+export type InfoBoxType = 'conseil' | 'budget' | 'attention' | 'famille' | 'transports' | 'info'
 
 export interface DestinationCardProps {
   ville: string

@@ -3,19 +3,29 @@
 import { useState } from 'react'
 import { FAQItem } from '@/types'
 
+interface LegacyFAQItem {
+  question: string
+  answer: string
+}
+
 interface FAQProps {
-  items: FAQItem[]
+  items?: FAQItem[]
+  questions?: LegacyFAQItem[]
   title?: string
 }
 
-export default function FAQ({ items, title = 'Questions fréquentes' }: FAQProps) {
+export default function FAQ({ items, questions, title = 'Questions fréquentes' }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const faqItems: FAQItem[] =
+    items ??
+    (questions?.map((q) => ({ question: q.question, reponse: q.answer })) ?? [])
 
   return (
     <div className="my-8" itemScope itemType="https://schema.org/FAQPage">
       <h2 className="font-display text-2xl font-bold text-brun mb-5">{title}</h2>
       <div className="space-y-3">
-        {items.map((item, index) => {
+        {faqItems.map((item, index) => {
           const isOpen = openIndex === index
 
           return (
