@@ -1,0 +1,67 @@
+import type { Metadata } from 'next'
+import { Playfair_Display, DM_Sans } from 'next/font/google'
+import './globals.css'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import CookieBanner from '@/components/CookieBanner'
+import Script from 'next/script'
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+})
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://souvenirsderoute.com'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Souvenirs de Route, blog voyage en famille',
+    template: '%s | Souvenirs de Route',
+  },
+  description:
+    "2 adultes, 2 enfants, 1 envie d\u2019ailleurs. Itin\u00e9raires, conseils et vraies histoires de voyages en famille, par Sophie depuis le Sud de la France.",
+  keywords: ['voyage en famille', 'blog voyage famille', 'vacances enfants', 'france famille', 'itinéraire famille'],
+  authors: [{ name: 'Sophie', url: `${SITE_URL}/a-propos` }],
+  creator: 'Sophie, Souvenirs de Route',
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: SITE_URL,
+    siteName: 'Souvenirs de Route',
+    title: 'Souvenirs de Route, blog voyage en famille',
+    description: "2 adultes, 2 enfants, 1 envie d\u2019ailleurs.",
+    images: [{ url: `${SITE_URL}/images/og-default.jpg`, width: 1200, height: 630, alt: 'Souvenirs de Route' }],
+  },
+  twitter: { card: 'summary_large_image', title: 'Souvenirs de Route', description: "2 adultes, 2 enfants, 1 envie d\u2019ailleurs." },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
+  alternates: { canonical: SITE_URL },
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+
+  return (
+    <html lang="fr" className={`${playfair.variable} ${dmSans.variable}`}>
+      <head>
+        {plausibleDomain && (
+          <Script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" strategy="afterInteractive" />
+        )}
+      </head>
+      <body className="min-h-screen flex flex-col bg-white text-texte font-body">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <CookieBanner />
+      </body>
+    </html>
+  )
+}

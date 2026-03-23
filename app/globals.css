@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-white text-texte font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 { @apply font-display; }
+}
+
+@layer components {
+  /* Boutons */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-dark transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 border-2 border-primary text-primary px-6 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-200;
+  }
+  .btn-turquoise {
+    @apply inline-flex items-center gap-2 bg-secondary text-white px-6 py-3 rounded-full font-semibold hover:bg-secondary-dark transition-all duration-200;
+  }
+
+  /* Tags génériques */
+  .tag {
+    @apply inline-block bg-fond-alt text-texte-muted text-xs font-medium px-3 py-1 rounded-full;
+  }
+
+  /* Tags par catégorie : couleurs vives */
+  .tag-itineraires  { @apply inline-block bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full; }
+  .tag-weekend      { @apply inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full; }
+  .tag-budget       { @apply inline-block bg-success text-white text-xs font-semibold px-3 py-1 rounded-full; }
+  .tag-pack         { @apply inline-block bg-accent text-texte text-xs font-semibold px-3 py-1 rounded-full; }
+  .tag-vacances     { @apply inline-block bg-bleu text-texte text-xs font-semibold px-3 py-1 rounded-full; }
+
+  /* Alias rétrocompatibles */
+  .tag-terracotta { @apply tag-itineraires; }
+  .tag-sage       { @apply tag-weekend; }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-100;
+  }
+
+  /* Titres de section */
+  .section-title { @apply font-display text-3xl md:text-4xl text-texte font-bold; }
+
+  /* Prose articles */
+  .prose-sophie {
+    @apply prose prose-lg max-w-none
+      prose-headings:font-display prose-headings:text-texte
+      prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+      prose-blockquote:border-primary prose-blockquote:text-texte-muted
+      prose-strong:text-texte
+      prose-img:rounded-2xl;
+  }
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #F7F9FC 25%, #FFFFFF 50%, #F7F9FC 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
