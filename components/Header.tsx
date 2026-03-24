@@ -140,9 +140,9 @@ export default function Header() {
   const pathname = usePathname()
 
   return (
-    <header className="bg-creme/95 backdrop-blur-sm sticky top-0 z-50 border-b border-sable-dark">
+    <header className="bg-white/95 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
           <Link href="/" className="flex flex-col leading-tight">
             <span className="font-display text-xl md:text-2xl text-brun font-bold tracking-tight">

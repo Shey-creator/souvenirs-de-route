@@ -3,7 +3,14 @@
     "allow": [
       "Bash(git init:*)",
       "Bash(ls /Users/patricia/souvenirs-de-route/.env*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(ls:*)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

@@ -8,24 +8,17 @@ interface BudgetFamilleProps {
   note?: string
 }
 
-interface BudgetLine {
-  label: string
-  emoji: string
-  value: number | string
-  color: string
-}
-
 export default function BudgetFamille(props: BudgetFamilleProps) {
   const hebergement = props.hebergement ?? 0
   const repas = props.repas ?? 0
   const activites = props.activites ?? 0
   const transportValue = props.transport ?? props.transports ?? 0
 
-  const lines: BudgetLine[] = [
-    { label: 'Hébergement', emoji: '🏨', value: hebergement, color: 'bg-terracotta' },
-    { label: 'Repas', emoji: '🍽️', value: repas, color: 'bg-sage' },
-    { label: 'Activités', emoji: '🎡', value: activites, color: 'bg-amber-400' },
-    { label: 'Transport', emoji: '🚗', value: transportValue, color: 'bg-blue-400' },
+  const lines = [
+    { label: 'Hébergement', icon: '🏨', value: hebergement },
+    { label: 'Repas',       icon: '🍽️', value: repas },
+    { label: 'Activités',   icon: '🎡', value: activites },
+    { label: 'Transport',   icon: '🚗', value: transportValue },
   ]
 
   const allNumeric =
@@ -41,55 +34,50 @@ export default function BudgetFamille(props: BudgetFamilleProps) {
   const displayTotal = props.total ?? (numericTotal !== null && numericTotal > 0 ? `${numericTotal} €` : null)
 
   return (
-    <div className="bg-white border border-sable-dark rounded-2xl overflow-hidden my-8 shadow-sm">
-      <div className="bg-terracotta px-5 py-4">
+    <div className="my-8 rounded-2xl overflow-hidden border border-gray-100 shadow-card">
+      {/* Header */}
+      <div className="bg-primary px-6 py-4">
         <h3 className="font-display font-bold text-white text-lg">
-          💶 Budget estimé
+          💶 Budget estimé — famille
         </h3>
         {props.note && <p className="text-white/80 text-xs mt-1">{props.note}</p>}
       </div>
 
-      <div className="p-5">
-        <div className="space-y-4 mb-5">
-          {lines.map((line) => (
-            <div key={line.label}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-sm text-brun flex items-center gap-2">
-                  <span aria-hidden>{line.emoji}</span>
-                  {line.label}
-                </span>
-                <span className="font-bold text-brun text-sm">
-                  {typeof line.value === 'number' && line.value > 0
-                    ? `${line.value} €`
-                    : typeof line.value === 'string' && line.value
-                    ? line.value
-                    : null}
-                </span>
-              </div>
-              {allNumeric && numericTotal !== null && numericTotal > 0 && (
-                <div className="h-2 bg-sable rounded-full overflow-hidden">
-                  <div
-                    className={`h-2 rounded-full ${line.color} transition-all duration-700`}
-                    style={{ width: `${Math.round(((line.value as number) / numericTotal) * 100)}%` }}
-                    role="meter"
-                    aria-label={`${line.label}: ${Math.round(((line.value as number) / numericTotal) * 100)}%`}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      {/* Table */}
+      <table className="w-full text-sm">
+        <tbody>
+          {lines.map((line, i) => {
+            const hasValue =
+              (typeof line.value === 'number' && line.value > 0) ||
+              (typeof line.value === 'string' && line.value)
+            if (!hasValue) return null
 
+            return (
+              <tr key={line.label} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                <td className="px-5 py-3 font-medium text-brun">
+                  <span className="mr-2" aria-hidden>{line.icon}</span>
+                  {line.label}
+                </td>
+                <td className="px-5 py-3 text-right font-bold text-brun">
+                  {typeof line.value === 'number' ? `${line.value} €` : line.value}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
         {displayTotal && (
-          <div className="bg-sable rounded-xl px-4 py-3 flex items-center justify-between">
-            <span className="font-display font-bold text-brun">Total</span>
-            <div className="text-right">
-              <span className="font-display font-bold text-terracotta text-xl">{displayTotal}</span>
-              <p className="text-xs text-brun-muted">pour toute la famille</p>
-            </div>
-          </div>
+          <tfoot>
+            <tr className="border-t-2 border-primary/20">
+              <td className="px-5 py-4 font-display font-bold text-brun">
+                Total famille
+              </td>
+              <td className="px-5 py-4 text-right">
+                <span className="font-display font-bold text-primary text-xl">{displayTotal}</span>
+              </td>
+            </tr>
+          </tfoot>
         )}
-      </div>
+      </table>
     </div>
   )
 }

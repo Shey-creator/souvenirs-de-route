@@ -38,7 +38,7 @@ const legal = [
 
 export default function Footer() {
   return (
-    <footer className="bg-brun text-sable mt-16">
+    <footer className="bg-[#3D2B1F] text-sable mt-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
@@ -126,7 +126,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="pt-8 border-t border-brun-light flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sable-dark text-xs">
             &copy; {new Date().getFullYear()} Souvenirs de Route. Fait avec amour depuis la France.
           </p>
