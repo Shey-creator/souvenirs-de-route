@@ -8,6 +8,11 @@ interface UnsplashApiResponse {
   user: { name: string; links: { html: string } }
 }
 
+interface UnsplashSearchResponse {
+  results: UnsplashApiResponse[]
+  total: number
+}
+
 // Noms anglais pour l'API Unsplash
 const CITY_EN: Record<string, string> = {
   montpellier: 'Montpellier', avignon: 'Avignon', marseille: 'Marseille',
@@ -30,36 +35,36 @@ const CITY_EN: Record<string, string> = {
 
 // Requetes photos de LIEUX specifiques par ville (monuments / quartiers iconiques)
 const CITY_PLACE_QUERY: Record<string, string> = {
-  paris: 'Eiffel Tower Paris',
+  paris: 'Paris France Eiffel Tower',
   barcelone: 'Sagrada Familia Barcelona',
   rome: 'Colosseum Rome',
   londres: 'Tower Bridge London',
   amsterdam: 'Amsterdam canals',
   berlin: 'Brandenburg Gate Berlin',
   prague: 'Prague castle',
-  nice: 'Nice promenade des anglais',
-  cannes: 'Cannes France coast',
-  marseille: 'Marseille vieux port',
-  lyon: 'Lyon old town France',
-  bordeaux: 'Bordeaux waterfront France',
-  montpellier: 'Montpellier France city',
-  avignon: 'Avignon France palace',
-  strasbourg: 'Strasbourg petite france',
-  annecy: 'Annecy lake France',
-  chamonix: 'Chamonix Mont Blanc',
-  'saint-malo': 'Saint-Malo ramparts France',
-  'mont-saint-michel': 'Mont Saint-Michel France',
-  carcassonne: 'Carcassonne medieval city',
-  colmar: 'Colmar alsace France',
-  biarritz: 'Biarritz France beach',
+  nice: 'Nice France promenade cote azur',
+  cannes: 'Cannes France promenade',
+  marseille: 'Marseille France vieux port',
+  lyon: 'Lyon France Vieux-Lyon',
+  bordeaux: 'Bordeaux France place bourse',
+  montpellier: 'Montpellier France place comedie',
+  avignon: 'Avignon France palais des papes',
+  strasbourg: 'Strasbourg France cathedrale',
+  annecy: 'Annecy France lac',
+  chamonix: 'Chamonix Alpes France',
+  'saint-malo': 'Saint-Malo France remparts mer',
+  'mont-saint-michel': 'Mont Saint Michel France',
+  carcassonne: 'Carcassonne France chateau medieval',
+  colmar: 'Colmar Alsace maisons colorees',
+  biarritz: 'Biarritz France plage',
   antibes: 'Antibes France',
   menton: 'Menton France',
-  nimes: 'Nimes France',
+  nimes: 'Nimes France arenes',
   arles: 'Arles France',
-  gordes: 'Gordes Provence',
+  gordes: 'Gordes Provence village',
   'les-baux-de-provence': 'Les Baux de Provence',
   dijon: 'Dijon France',
-  sete: 'Sete France',
+  sete: 'Sete France canal',
   lisbonne: 'Lisbon tram',
   budapest: 'Budapest parliament',
   vienne: 'Vienna opera house',
@@ -89,44 +94,52 @@ export function buildHeroQuery(ville: string, pays: string = 'France'): string {
 }
 
 /**
- * Requete FAMILLE : utilisee UNIQUEMENT sur homepage et page a-propos.
- * Une seule vraie photo famille sur tout le site.
+ * Fonction centralisee : appelle /search/photos (retourne toujours un 200).
+ * Retourne l'URL de la premiere photo trouvee, ou null.
+ * Ne plante jamais (try/catch).
  */
-export const FAMILY_PHOTO_QUERY = 'family four people travel europe happy'
-
-// Requetes prioritaires pour la photo de famille unique (homepage + a-propos)
-const FAMILY_PHOTO_QUERIES = [
-  'couple children travel europe sunny',
-  'family vacation mediterranean beach',
-  'parents kids travel holiday europe',
-  'family walking city europe summer',
-]
-
-/**
- * Fetch la photo de famille unique.
- * Essaie les requetes dans l'ordre, retourne la premiere qui fonctionne.
- * Utilisee UNIQUEMENT sur la homepage (hero) et la page a-propos.
- */
-export async function fetchFamilyPhoto(): Promise<UnsplashImage> {
+export async function getUnsplashPhoto(
+  query: string,
+  fallbackQuery?: string
+): Promise<string | null> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY
-  if (!accessKey) return { url: null, alt: 'Famille en voyage' }
+  if (!accessKey) return null
 
-  for (const query of FAMILY_PHOTO_QUERIES) {
-    const data = await tryFetch(query, 'landscape', accessKey)
-    if (data) {
-      return {
-        url: data.urls.regular,
-        alt: data.alt_description || query,
-        credit: {
-          name: data.user.name,
-          link: `${data.user.links.html}?utm_source=souvenirs_de_route&utm_medium=referral`,
-        },
+  try {
+    const params = new URLSearchParams({
+      query,
+      orientation: 'landscape',
+      per_page: '3',
+      order_by: 'relevant',
+      client_id: accessKey,
+    })
+    const res = await fetch(`${UNSPLASH_API}/search/photos?${params}`, {
+      next: { revalidate: 86400 },
+    })
+    if (!res.ok) {
+      if (fallbackQuery) return getUnsplashPhoto(fallbackQuery)
+      return null
+    }
+    const data: UnsplashSearchResponse = await res.json()
+    const url = data.results?.[0]?.urls?.regular ?? null
+    if (!url && fallbackQuery) return getUnsplashPhoto(fallbackQuery)
+    return url
+  } catch {
+    if (fallbackQuery) {
+      try {
+        return await getUnsplashPhoto(fallbackQuery)
+      } catch {
+        return null
       }
     }
+    return null
   }
-
-  return { url: null, alt: 'Famille en voyage' }
 }
+
+/**
+ * Requete FAMILLE : utilisee UNIQUEMENT sur homepage et page a-propos.
+ */
+export const FAMILY_PHOTO_QUERY = 'family four people travel europe happy'
 
 // Requetes paysage France/Provence pour le hero de la homepage
 const HERO_LANDSCAPE_QUERIES = [
@@ -138,27 +151,40 @@ const HERO_LANDSCAPE_QUERIES = [
 
 /**
  * Fetch une photo paysage France/Provence pour le hero de la homepage.
- * Aucun visage. Format paysage immersif.
  */
 export async function fetchHeroLandscapePhoto(): Promise<UnsplashImage> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY
   if (!accessKey) return { url: null, alt: 'Paysage du Sud de la France' }
 
   for (const query of HERO_LANDSCAPE_QUERIES) {
-    const data = await tryFetch(query, 'landscape', accessKey)
-    if (data) {
-      return {
-        url: data.urls.regular,
-        alt: data.alt_description || query,
-        credit: {
-          name: data.user.name,
-          link: `${data.user.links.html}?utm_source=souvenirs_de_route&utm_medium=referral`,
-        },
-      }
-    }
+    const url = await getUnsplashPhoto(query)
+    if (url) return { url, alt: 'Paysage du Sud de la France' }
   }
 
   return { url: null, alt: 'Paysage du Sud de la France' }
+}
+
+// Requetes pour la photo de famille (homepage)
+const FAMILY_PHOTO_QUERIES = [
+  'couple children travel europe sunny',
+  'family vacation mediterranean beach',
+  'parents kids travel holiday europe',
+  'family walking city europe summer',
+]
+
+/**
+ * Fetch la photo de famille unique (homepage + a-propos).
+ */
+export async function fetchFamilyPhoto(): Promise<UnsplashImage> {
+  const accessKey = process.env.UNSPLASH_ACCESS_KEY
+  if (!accessKey) return { url: null, alt: 'Famille en voyage' }
+
+  for (const query of FAMILY_PHOTO_QUERIES) {
+    const url = await getUnsplashPhoto(query)
+    if (url) return { url, alt: 'Famille en voyage' }
+  }
+
+  return { url: null, alt: 'Famille en voyage' }
 }
 
 // Requetes pour la photo de Sophie (de dos ou profil, pas le visage)
@@ -169,84 +195,39 @@ const SOPHIE_PHOTO_QUERIES = [
 ]
 
 /**
- * Fetch la photo de Sophie. Photo de dos ou profil preferee.
- * Utilisee uniquement sur la page a-propos.
+ * Fetch la photo de Sophie. Utilisee uniquement sur la page a-propos.
  */
 export async function fetchSophiePhoto(): Promise<UnsplashImage> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY
   if (!accessKey) return { url: null, alt: 'Sophie en voyage' }
 
   for (const query of SOPHIE_PHOTO_QUERIES) {
-    const data = await tryFetch(query, 'portrait', accessKey)
-    if (data) {
-      return {
-        url: data.urls.regular,
-        alt: data.alt_description || query,
-        credit: {
-          name: data.user.name,
-          link: `${data.user.links.html}?utm_source=souvenirs_de_route&utm_medium=referral`,
-        },
-      }
-    }
+    const url = await getUnsplashPhoto(query)
+    if (url) return { url, alt: 'Sophie en voyage' }
   }
 
   return { url: null, alt: 'Sophie en voyage' }
 }
 
-async function tryFetch(
-  query: string,
-  orientation: string,
-  accessKey: string
-): Promise<UnsplashApiResponse | null> {
-  try {
-    const params = new URLSearchParams({ query, orientation, client_id: accessKey })
-    const res = await fetch(`${UNSPLASH_API}/photos/random?${params}`, {
-      next: { revalidate: 86400 },
-    })
-    if (res.ok) return res.json()
-    return null
-  } catch {
-    return null
-  }
-}
-
 /**
- * Fetch une image Unsplash.
- * Retourne url: null si aucune photo, les composants afficheront le gradient.
- * On ne fait UNE SEULE tentative par requete : jamais de photo incorrecte.
+ * Fetch une image Unsplash avec fallback.
+ * Utilise getUnsplashPhoto en interne (search/photos, jamais random).
  */
 export async function fetchUnsplashImage(
   query: string,
-  orientation: 'landscape' | 'portrait' | 'squarish' = 'landscape',
+  _orientation: 'landscape' | 'portrait' | 'squarish' = 'landscape',
   fallbackQuery?: string
 ): Promise<UnsplashImage> {
-  const accessKey = process.env.UNSPLASH_ACCESS_KEY
-  if (!accessKey) return { url: null, alt: query }
-
-  let data = await tryFetch(query, orientation, accessKey)
-
-  if (!data && fallbackQuery) {
-    data = await tryFetch(fallbackQuery, orientation, accessKey)
-  }
-
-  if (!data) return { url: null, alt: query }
-
-  return {
-    url: data.urls.regular,
-    alt: data.alt_description || query,
-    credit: {
-      name: data.user.name,
-      link: `${data.user.links.html}?utm_source=souvenirs_de_route&utm_medium=referral`,
-    },
-  }
+  const url = await getUnsplashPhoto(query, fallbackQuery)
+  return { url, alt: query }
 }
 
 export async function fetchMultipleImages(
   queries: { query: string; orientation?: 'landscape' | 'portrait' | 'squarish'; fallback?: string }[]
 ): Promise<UnsplashImage[]> {
   return Promise.all(
-    queries.map(({ query, orientation, fallback }) =>
-      fetchUnsplashImage(query, orientation, fallback)
+    queries.map(({ query, fallback }) =>
+      fetchUnsplashImage(query, 'landscape', fallback)
     )
   )
 }

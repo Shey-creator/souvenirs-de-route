@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllArticleSlugs, getArticleBySlug, getRelatedArticles } from '@/lib/articles'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
-import { fetchUnsplashImage, buildHeroQuery } from '@/lib/unsplash'
+import { getUnsplashPhoto, buildHeroQuery } from '@/lib/unsplash'
 import HeroGradient from '@/components/HeroGradient'
 import ArticleCard from '@/components/ArticleCard'
 import ReadingProgress from '@/components/ReadingProgress'
@@ -120,12 +120,10 @@ export default async function ArticlePage({ params }: PageProps) {
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://souvenirsderoute.com'
   const articleUrl = `${SITE_URL}/articles/${article.slug}`
 
-  const heroImage = await fetchUnsplashImage(
+  const heroSrc = await getUnsplashPhoto(
     buildHeroQuery(article.ville, article.pays),
-    'landscape',
-    article.pays.toLowerCase() === 'france' ? 'france family travel' : 'europe family travel'
+    article.pays.toLowerCase() === 'france' ? 'france city travel' : 'europe city travel'
   )
-  const heroSrc = heroImage.url
 
   const headings = extractHeadings(article.content)
 
