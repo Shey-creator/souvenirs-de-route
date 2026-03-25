@@ -44,6 +44,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title: 'Souvenirs de Route', description: "2 adultes, 2 enfants, 1 envie d\u2019ailleurs." },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   alternates: { canonical: SITE_URL },
+  icons: { icon: '/icon.svg', shortcut: '/icon.svg' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

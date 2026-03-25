@@ -51,7 +51,15 @@ const CITY_PLACE_QUERY: Record<string, string> = {
   'mont-saint-michel': 'Mont Saint-Michel France',
   carcassonne: 'Carcassonne medieval city',
   colmar: 'Colmar alsace France',
-  biarritz: 'Biarritz France coast',
+  biarritz: 'Biarritz France beach',
+  antibes: 'Antibes France',
+  menton: 'Menton France',
+  nimes: 'Nimes France',
+  arles: 'Arles France',
+  gordes: 'Gordes Provence',
+  'les-baux-de-provence': 'Les Baux de Provence',
+  dijon: 'Dijon France',
+  sete: 'Sete France',
   lisbonne: 'Lisbon tram',
   budapest: 'Budapest parliament',
   vienne: 'Vienna opera house',
@@ -118,6 +126,39 @@ export async function fetchFamilyPhoto(): Promise<UnsplashImage> {
   }
 
   return { url: null, alt: 'Famille en voyage' }
+}
+
+// Requetes paysage France/Provence pour le hero de la homepage
+const HERO_LANDSCAPE_QUERIES = [
+  'provence lavender field france sunny',
+  'south france mediterranean village',
+  'french riviera coast sunny',
+  'provence village france summer',
+]
+
+/**
+ * Fetch une photo paysage France/Provence pour le hero de la homepage.
+ * Aucun visage. Format paysage immersif.
+ */
+export async function fetchHeroLandscapePhoto(): Promise<UnsplashImage> {
+  const accessKey = process.env.UNSPLASH_ACCESS_KEY
+  if (!accessKey) return { url: null, alt: 'Paysage du Sud de la France' }
+
+  for (const query of HERO_LANDSCAPE_QUERIES) {
+    const data = await tryFetch(query, 'landscape', accessKey)
+    if (data) {
+      return {
+        url: data.urls.regular,
+        alt: data.alt_description || query,
+        credit: {
+          name: data.user.name,
+          link: `${data.user.links.html}?utm_source=souvenirs_de_route&utm_medium=referral`,
+        },
+      }
+    }
+  }
+
+  return { url: null, alt: 'Paysage du Sud de la France' }
 }
 
 // Requetes pour la photo de Sophie (de dos ou profil, pas le visage)

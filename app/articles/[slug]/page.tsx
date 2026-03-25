@@ -193,7 +193,7 @@ export default async function ArticlePage({ params }: PageProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 -mt-12 relative pb-16">
         <div className="lg:grid lg:grid-cols-[220px_1fr] lg:gap-10 items-start">
 
-          {/* TOC — sticky sidebar desktop */}
+          {/* TOC : sticky sidebar desktop */}
           {headings.length > 0 && (
             <aside className="hidden lg:block">
               <div className="sticky top-24 bg-white rounded-2xl border border-gray-100 shadow-card p-5">
@@ -235,12 +235,11 @@ export default async function ArticlePage({ params }: PageProps) {
               <p className="text-brun-muted text-lg leading-relaxed mb-10">{article.description}</p>
 
               {/* Infos rapides */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12 p-5 bg-fond-alt rounded-2xl">
+              <div className="grid grid-cols-3 gap-3 mb-12 p-5 bg-fond-alt rounded-2xl">
                 {[
                   { label: 'Destination', value: article.ville, emoji: '📍' },
                   { label: 'Durée', value: article.duree, emoji: '📅' },
                   { label: 'Budget', value: budgetLabel[article.budget], emoji: '💶' },
-                  { label: 'Ages', value: article.agesEnfants, emoji: '👶' },
                 ].map((info) => (
                   <div key={info.label} className="text-center">
                     <span className="text-xl block mb-1" aria-hidden>{info.emoji}</span>

@@ -4,7 +4,7 @@ import { getAllArticles } from '@/lib/articles'
 import ArticleCard from '@/components/ArticleCard'
 import DestinationCard from '@/components/DestinationCard'
 import DestinationQuiz from '@/components/DestinationQuiz'
-import { fetchMultipleImages, fetchFamilyPhoto, FAMILY_PHOTO_QUERY } from '@/lib/unsplash'
+import { fetchMultipleImages, fetchHeroLandscapePhoto, fetchFamilyPhoto, FAMILY_PHOTO_QUERY } from '@/lib/unsplash'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -54,7 +54,7 @@ export default async function HomePage() {
   const latestArticles = articles.slice(0, 6)
 
   const [heroImage, [sophieImage, ...destinationImages]] = await Promise.all([
-    fetchFamilyPhoto(),
+    fetchHeroLandscapePhoto(),
     fetchMultipleImages([
       { query: FAMILY_PHOTO_QUERY, orientation: 'squarish' },
       ...DESTINATIONS.map((d) => ({ query: d.query, orientation: 'squarish' as const })),
@@ -111,20 +111,23 @@ export default async function HomePage() {
             <div className="animate-fade-in">
               <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl">
                 {heroImageUrl ? (
-                  <Image
-                    src={heroImageUrl}
-                    alt={heroImage.alt || 'Sophie, Lucas et leurs enfants en voyage en Europe'}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+                  <>
+                    <Image
+                      src={heroImageUrl}
+                      alt={heroImage.alt || 'Paysage du sud de la France, Provence et Méditerranée'}
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-black/20 rounded-3xl" />
+                  </>
                 ) : (
-                  <div className="w-full h-full" style={{ background: 'linear-gradient(135deg, #FF6B35 0%, #FFE66D 100%)' }} />
+                  <div className="w-full h-full" style={{ background: 'linear-gradient(135deg, #C9674A 0%, #F5E6D3 100%)' }} />
                 )}
               </div>
               <p className="text-center text-sm italic text-gray-400 mt-3">
-                Sophie, Lucas et leurs deux petits aventuriers
+                Le Sud de la France, notre terrain de jeu favori
               </p>
             </div>
           </div>

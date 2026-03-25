@@ -38,7 +38,7 @@ export default function BudgetFamille(props: BudgetFamilleProps) {
       {/* Header */}
       <div className="bg-primary px-6 py-4">
         <h3 className="font-display font-bold text-white text-lg">
-          💶 Budget estimé — famille
+          💶 Budget estimé, famille
         </h3>
         {props.note && <p className="text-white/80 text-xs mt-1">{props.note}</p>}
       </div>

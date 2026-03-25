@@ -10,7 +10,8 @@
       "Bash(git push:*)",
       "Bash(ls:*)",
       "Bash(npm run:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(grep:*)"
     ]
   }
 }
