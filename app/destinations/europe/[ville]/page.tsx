@@ -1,7 +1,9 @@
 import { getAllArticles } from '@/lib/articles'
 import ArticleCard from '@/components/ArticleCard'
 import HeroGradient from '@/components/HeroGradient'
-import { fetchUnsplashImage, buildHeroQuery } from '@/lib/unsplash'
+import { getUnsplashPhoto, buildHeroQuery } from '@/lib/unsplash'
+import { CITIES_DATA } from '@/lib/destinations-data'
+import DestinationSections from '@/components/DestinationSections'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
@@ -54,17 +56,16 @@ export default async function EuropeVillePage({ params }: PageProps) {
     (a) => a.ville.toLowerCase() === nom.toLowerCase()
   )
 
-  const heroImage = await fetchUnsplashImage(
+  const photoUrl = await getUnsplashPhoto(
     buildHeroQuery(params.ville, pays),
-    'landscape',
-    'europe travel'
+    'europe city travel'
   )
 
   return (
     <>
-      {heroImage.url ? (
+      {photoUrl ? (
         <div className="relative h-64 md:h-80 w-full">
-          <Image src={heroImage.url} alt={nom} fill className="object-cover" priority sizes="100vw" />
+          <Image src={photoUrl} alt={`${nom}, ${pays}`} fill className="object-cover" priority sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-texte/60 to-transparent" />
           <div className="absolute bottom-6 left-0 right-0 px-4 sm:px-6 max-w-6xl mx-auto">
             <p className="text-white/70 text-sm mb-1">
@@ -86,7 +87,21 @@ export default async function EuropeVillePage({ params }: PageProps) {
       )}
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-        {villeData?.teaser && <p className="text-texte-muted text-lg mb-8 max-w-2xl">{villeData.teaser}</p>}
+        {villeData?.teaser && (
+          <p className="text-brun-muted text-lg mb-10 max-w-2xl">{villeData.teaser}</p>
+        )}
+
+        {CITIES_DATA[params.ville] && (
+          <div className="mb-14">
+            <DestinationSections data={CITIES_DATA[params.ville]} ville={nom} />
+          </div>
+        )}
+
+        {articles.length > 0 && (
+          <h2 className="font-display text-2xl font-bold text-brun mb-6">
+            Nos articles sur {nom}
+          </h2>
+        )}
 
         {articles.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

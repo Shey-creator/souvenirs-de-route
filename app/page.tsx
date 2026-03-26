@@ -234,7 +234,7 @@ export default async function HomePage() {
                 <p>
                   Ce blog, c&apos;est mon carnet de route. Pas de photos retouchées, pas
                   d&apos;itinéraires parfaits. Juste la vérité : le bon resto qu&apos;on a adoré,
-                  l&apos;hôtel pas top, la crise de Tom dans le car, et la magie qui reste
+                  les imprévus qu&apos;on n&apos;avait pas planifiés, et la magie qui reste
                   malgré tout.
                 </p>
               </div>

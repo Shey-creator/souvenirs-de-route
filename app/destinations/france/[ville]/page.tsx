@@ -2,6 +2,8 @@ import { getAllArticles } from '@/lib/articles'
 import ArticleCard from '@/components/ArticleCard'
 import HeroGradient from '@/components/HeroGradient'
 import { getUnsplashPhoto } from '@/lib/unsplash'
+import { CITIES_DATA } from '@/lib/destinations-data'
+import DestinationSections from '@/components/DestinationSections'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 
@@ -134,7 +136,22 @@ export default async function VillePage({ params }: PageProps) {
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         {villeData?.teaser && (
-          <p className="text-texte-muted text-lg mb-8 max-w-2xl">{villeData.teaser}</p>
+          <p className="text-brun-muted text-lg mb-10 max-w-2xl">{villeData.teaser}</p>
+        )}
+
+        {/* Sections enrichies si données disponibles */}
+        {CITIES_DATA[params.ville] && (
+          <div className="mb-14">
+            <DestinationSections data={CITIES_DATA[params.ville]} ville={nom} />
+          </div>
+        )}
+
+        {articles.length > 0 && (
+          <>
+            <h2 className="font-display text-2xl font-bold text-brun mb-6">
+              Nos articles sur {nom}
+            </h2>
+          </>
         )}
 
         {articles.length > 0 ? (

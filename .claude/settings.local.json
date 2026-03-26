@@ -11,7 +11,8 @@
       "Bash(ls:*)",
       "Bash(npm run:*)",
       "Bash(npm install:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(cat /Users/patricia/souvenirs-de-route/app/destinations/europe/[ville]/page.tsx)"
     ]
   }
 }
