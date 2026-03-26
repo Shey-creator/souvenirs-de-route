@@ -5,9 +5,9 @@ import { generateBreadcrumbSchema } from '@/lib/schema'
 import { fetchFamilyPhoto, fetchSophiePhoto } from '@/lib/unsplash'
 
 export const metadata: Metadata = {
-  title: 'À propos : Sophie, Lucas, Léa et Tom',
+  title: 'À propos : Sophie, Lucas et les enfants',
   description:
-    'Qui sommes-nous ? Sophie (38 ans), Lucas, Léa (8 ans) et Tom (5 ans) : une famille du Sud de la France qui voyage avec des enfants depuis 2019. Notre histoire, nos valeurs, pourquoi ce blog.',
+    'Qui sommes-nous ? Sophie, Lucas et leurs deux enfants : une famille qui voyage depuis 2019. Notre histoire, nos valeurs, pourquoi ce blog.',
 }
 
 function SophieAvatar() {
@@ -67,8 +67,8 @@ export default async function AProposPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <span className="tag-terracotta mb-4 inline-block">Qui sommes-nous ?</span>
           <h1 className="font-display text-4xl md:text-5xl text-brun font-bold mb-4">
-            2 adultes, 2 enfants,<br />
-            <span className="text-terracotta">1 envie d&apos;ailleurs</span>
+            Une famille,<br />
+            <span className="text-terracotta">une envie d&apos;ailleurs</span>
           </h1>
           <p className="text-brun-muted text-lg leading-relaxed max-w-2xl mx-auto">
             On n&apos;est pas des globe-trotters professionnels. On est juste une famille ordinaire
@@ -106,8 +106,8 @@ export default async function AProposPage() {
             </h2>
             <div className="space-y-4 text-brun-muted leading-relaxed">
               <p>
-                J&apos;ai 38 ans et je vis dans le Sud de la France avec mon mari Lucas
-                et nos deux enfants Léa et Tom.
+                J&apos;ai 38 ans et je vis dans le sud de la France avec mon mari Lucas
+                et nos deux enfants.
               </p>
               <p>
                 Avant d&apos;être maman, j&apos;ai voyagé dans plus de 40 pays.

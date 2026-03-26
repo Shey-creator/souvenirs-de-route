@@ -7,7 +7,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Toutes nos destinations : voyages en famille',
   description:
-    'France et Europe : découvrez toutes nos destinations testées en famille par Sophie, Lucas, Léa (8 ans) et Tom (5 ans). Itinéraires, budgets, conseils pratiques.',
+    'France et Europe : découvrez toutes nos destinations testées en famille. Itinéraires, budgets, conseils pratiques.',
 }
 
 const pays = [
