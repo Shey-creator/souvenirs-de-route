@@ -148,9 +148,6 @@ export default function Header() {
             <span className="font-display text-xl md:text-2xl text-brun font-bold tracking-tight">
               Souvenirs de Route
             </span>
-            <span className="text-xs text-brun-muted hidden sm:block">
-              2 adultes, 2 enfants, 1 envie d&apos;ailleurs
-            </span>
           </Link>
 
           {/* Nav desktop */}

@@ -4,13 +4,15 @@ import { getAllArticles } from '@/lib/articles'
 import ArticleCard from '@/components/ArticleCard'
 import DestinationCard from '@/components/DestinationCard'
 import DestinationQuiz from '@/components/DestinationQuiz'
-import { fetchMultipleImages, fetchHeroLandscapePhoto, fetchFamilyPhoto, FAMILY_PHOTO_QUERY } from '@/lib/unsplash'
+import { fetchMultipleImages, FAMILY_PHOTO_QUERY } from '@/lib/unsplash'
 import type { Metadata } from 'next'
+
+const HERO_IMAGE_URL = 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80'
 
 export const metadata: Metadata = {
   title: 'Souvenirs de Route, blog voyage en famille',
   description:
-    'Itinéraires testés, conseils honnêtes et vraies anecdotes de voyage en famille par Sophie, Lucas, Léa et Tom depuis le Sud de la France.',
+    'Des itinéraires testés, des adresses honnêtes, des conseils qui marchent vraiment. Le blog voyage en famille.',
 }
 
 // Destinations : photos de LIEUX (monuments/quartiers), jamais de photos famille generiques
@@ -53,82 +55,44 @@ export default async function HomePage() {
   const articles = getAllArticles()
   const latestArticles = articles.slice(0, 6)
 
-  const [heroImage, [sophieImage, ...destinationImages]] = await Promise.all([
-    fetchHeroLandscapePhoto(),
-    fetchMultipleImages([
-      { query: FAMILY_PHOTO_QUERY, orientation: 'squarish' },
-      ...DESTINATIONS.map((d) => ({ query: d.query, orientation: 'squarish' as const })),
-    ]),
+  const [sophieImage, ...destinationImages] = await fetchMultipleImages([
+    { query: FAMILY_PHOTO_QUERY, orientation: 'squarish' },
+    ...DESTINATIONS.map((d) => ({ query: d.query, orientation: 'squarish' as const })),
   ])
-  const HERO_FALLBACK = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1600&q=80'
-  const heroImageUrl = heroImage.url ? heroImage.url.replace(/\bw=\d+\b/, 'w=1400') : HERO_FALLBACK
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative bg-sable overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Texte */}
-            <div className="animate-slide-up">
-              <span className="tag-terracotta mb-4 inline-block">
-                🌍 Blog voyage famille depuis 2024
-              </span>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brun font-bold leading-tight mb-6">
-                Parce que les souvenirs de famille, ça se prépare.
-              </h1>
-              <p className="text-brun-muted text-lg leading-relaxed mb-8">
-                Des itinéraires testés, des adresses honnêtes,<br className="hidden sm:block" />
-                des conseils qui marchent vraiment.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/destinations" className="btn-primary">
-                  Explorer les destinations
-                </Link>
-                <Link href="/a-propos" className="btn-secondary">
-                  Notre histoire
-                </Link>
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 mt-10 pt-8 border-t border-sable-dark">
-                {[
-                  { value: '12+', label: 'destinations' },
-                  { value: '40+', label: 'articles' },
-                  { value: '3 à 12', label: 'ans testés' },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center">
-                    <p className="font-display text-2xl font-bold text-terracotta">{stat.value}</p>
-                    <p className="text-xs text-brun-muted">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Image hero */}
-            <div className="animate-fade-in">
-              <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl">
-                <Image
-                  src={heroImageUrl}
-                  alt={heroImage.alt || 'Lavande en Provence, Sud de la France'}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-black/20 rounded-3xl" />
-              </div>
-              <p className="text-center text-sm italic text-gray-400 mt-3">
-                Le Sud de la France, notre terrain de jeu favori
-              </p>
-            </div>
+      {/* HERO PLEINE LARGEUR */}
+      <section className="relative flex items-center justify-center" style={{ minHeight: '80vh' }}>
+        <Image
+          src={HERO_IMAGE_URL}
+          alt="Voyage en famille, paysage"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.45)' }} />
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white font-bold leading-tight mb-6">
+            Parce que les souvenirs de famille, ça se prépare.
+          </h1>
+          <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+            Des itinéraires testés, des adresses honnêtes,<br className="hidden sm:block" />
+            des conseils qui marchent vraiment.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link href="/destinations" className="btn-primary">
+              Explorer les destinations
+            </Link>
+            <Link
+              href="/a-propos"
+              className="inline-flex items-center px-6 py-3 rounded-full border border-white text-white text-sm font-medium hover:bg-white hover:text-brun transition-colors"
+            >
+              Notre histoire
+            </Link>
           </div>
         </div>
-
-        {/* Vague decorative */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-creme" style={{
-          clipPath: 'ellipse(55% 100% at 50% 100%)'
-        }} />
       </section>
 
       {/* DERNIERS ARTICLES */}
