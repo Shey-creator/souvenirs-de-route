@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CookieBanner from '@/components/CookieBanner'
+import NewsletterPopup from '@/components/NewsletterPopup'
 import Script from 'next/script'
 
 const playfair = Playfair_Display({
@@ -49,6 +50,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
+  const gaId = process.env.NEXT_PUBLIC_GA_ID
 
   return (
     <html lang="fr" className={`${playfair.variable} ${dmSans.variable}`}>
@@ -56,12 +58,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {plausibleDomain && (
           <Script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" strategy="afterInteractive" />
         )}
+        {gaId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}', { page_path: window.location.pathname });
+              `}
+            </Script>
+          </>
+        )}
       </head>
       <body className="min-h-screen flex flex-col bg-white text-texte font-body">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
         <CookieBanner />
+        <NewsletterPopup />
       </body>
     </html>
   )

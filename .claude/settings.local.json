@@ -12,7 +12,9 @@
       "Bash(npm run:*)",
       "Bash(npm install:*)",
       "Bash(grep:*)",
-      "Bash(cat /Users/patricia/souvenirs-de-route/app/destinations/europe/[ville]/page.tsx)"
+      "Bash(cat /Users/patricia/souvenirs-de-route/app/destinations/europe/[ville]/page.tsx)",
+      "Bash(git rm:*)",
+      "Bash(histoires.\" avec blockquote Playfair + bordure orange:*)"
     ]
   }
 }

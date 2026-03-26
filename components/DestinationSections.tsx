@@ -179,7 +179,7 @@ export default function DestinationSections({ data, ville }: Props) {
       {data.checklistExtra.length > 0 && (
         <section>
           <h2 className="font-display text-2xl font-bold text-brun mb-2">
-            Pack your bag — spécial {ville}
+            Pack your bag : spécial {ville}
           </h2>
           <p className="text-brun-muted text-sm mb-6">
             Les essentiels famille + ce qu&apos;on ajoute spécifiquement pour {ville}.

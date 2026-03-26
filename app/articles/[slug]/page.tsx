@@ -13,6 +13,7 @@ import ShareButtons from '@/components/ShareButtons'
 import SaveButton from '@/components/SaveButton'
 import AffiliateBox from '@/components/AffiliateBox'
 import TableOfContents from '@/components/TableOfContents'
+import GiscusComments from '@/components/GiscusComments'
 import DestinationChecklist from '@/components/mdx/DestinationChecklist'
 import InfoBox from '@/components/mdx/InfoBox'
 import Gallery from '@/components/mdx/Gallery'
@@ -254,6 +255,9 @@ export default async function ArticlePage({ params }: PageProps) {
 
               {/* Affiliés */}
               <AffiliateBox ville={article.ville} type="both" />
+
+              {/* Commentaires Giscus */}
+              <GiscusComments slug={article.slug} />
 
               {/* Tags + Partage */}
               <div className="mt-10 pt-6 border-t border-gray-100 space-y-4">

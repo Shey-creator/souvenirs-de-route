@@ -234,9 +234,13 @@ export default async function HomePage() {
                 <p>
                   Ce blog, c&apos;est mon carnet de route. Pas de photos retouchées, pas
                   d&apos;itinéraires parfaits. Juste la vérité : le bon resto qu&apos;on a adoré,
-                  les imprévus qu&apos;on n&apos;avait pas planifiés, et la magie qui reste
-                  malgré tout.
+                  les galères qu&apos;on n&apos;avait pas prévues, et la magie qui reste malgré tout.
                 </p>
+                <blockquote className="border-l-4 border-primary pl-4 italic text-brun font-medium mt-4">
+                  «&nbsp;On part avec un plan. On rentre avec des histoires.
+                  C&apos;est ça, voyager en famille.&nbsp;»
+                  <cite className="block not-italic text-sm text-brun-muted mt-1 font-normal">Sophie</cite>
+                </blockquote>
               </div>
               <Link href="/a-propos" className="btn-primary mt-6 inline-flex">
                 En savoir plus sur nous
