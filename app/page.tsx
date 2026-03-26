@@ -60,7 +60,8 @@ export default async function HomePage() {
       ...DESTINATIONS.map((d) => ({ query: d.query, orientation: 'squarish' as const })),
     ]),
   ])
-  const heroImageUrl = heroImage.url ? heroImage.url.replace(/\bw=\d+\b/, 'w=1400') : null
+  const HERO_FALLBACK = 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1600&q=80'
+  const heroImageUrl = heroImage.url ? heroImage.url.replace(/\bw=\d+\b/, 'w=1400') : HERO_FALLBACK
 
   return (
     <>
@@ -106,21 +107,15 @@ export default async function HomePage() {
             {/* Image hero */}
             <div className="animate-fade-in">
               <div className="relative aspect-video rounded-3xl overflow-hidden shadow-xl">
-                {heroImageUrl ? (
-                  <>
-                    <Image
-                      src={heroImageUrl}
-                      alt={heroImage.alt || 'Paysage du sud de la France, Provence et Méditerranée'}
-                      fill
-                      className="object-cover"
-                      priority
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-black/20 rounded-3xl" />
-                  </>
-                ) : (
-                  <div className="w-full h-full" style={{ background: 'linear-gradient(135deg, #C9674A 0%, #F5E6D3 100%)' }} />
-                )}
+                <Image
+                  src={heroImageUrl}
+                  alt={heroImage.alt || 'Lavande en Provence, Sud de la France'}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-black/20 rounded-3xl" />
               </div>
               <p className="text-center text-sm italic text-gray-400 mt-3">
                 Le Sud de la France, notre terrain de jeu favori

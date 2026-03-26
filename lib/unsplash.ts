@@ -95,21 +95,27 @@ export function buildHeroQuery(ville: string, pays: string = 'France'): string {
 
 /**
  * Fonction centralisee : appelle /search/photos (retourne toujours un 200).
- * Retourne l'URL de la premiere photo trouvee, ou null.
+ * Retourne l'URL de la photo a l'index donne, ou null.
  * Ne plante jamais (try/catch).
  */
 export async function getUnsplashPhoto(
   query: string,
-  fallbackQuery?: string
+  fallbackQuery?: string,
+  index: number = 0
 ): Promise<string | null> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY
-  if (!accessKey) return null
+  if (!accessKey) {
+    console.warn('[Unsplash] UNSPLASH_ACCESS_KEY manquante — photos desactivees')
+    return null
+  }
+  console.log(`[Unsplash] Requete: "${query}" (index ${index})`)
 
   try {
+    const perPage = Math.max(3, index + 1)
     const params = new URLSearchParams({
       query,
       orientation: 'landscape',
-      per_page: '3',
+      per_page: String(perPage),
       order_by: 'relevant',
       client_id: accessKey,
     })
@@ -117,14 +123,21 @@ export async function getUnsplashPhoto(
       next: { revalidate: 86400 },
     })
     if (!res.ok) {
+      console.warn(`[Unsplash] Erreur HTTP ${res.status} pour: "${query}"`)
       if (fallbackQuery) return getUnsplashPhoto(fallbackQuery)
       return null
     }
     const data: UnsplashSearchResponse = await res.json()
-    const url = data.results?.[0]?.urls?.regular ?? null
-    if (!url && fallbackQuery) return getUnsplashPhoto(fallbackQuery)
+    const url = data.results?.[index]?.urls?.regular ?? data.results?.[0]?.urls?.regular ?? null
+    if (!url) {
+      console.warn(`[Unsplash] Aucun resultat pour: "${query}"`)
+      if (fallbackQuery) return getUnsplashPhoto(fallbackQuery)
+    } else {
+      console.log(`[Unsplash] Photo OK pour: "${query}"`)
+    }
     return url
-  } catch {
+  } catch (err) {
+    console.error(`[Unsplash] Exception pour: "${query}"`, err)
     if (fallbackQuery) {
       try {
         return await getUnsplashPhoto(fallbackQuery)

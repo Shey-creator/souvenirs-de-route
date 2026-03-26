@@ -55,6 +55,46 @@ function H3({ children }: { children?: React.ReactNode }) {
   return <h3 id={id}>{children}</h3>
 }
 
+function createArticlePhotoComponent(photos: (string | null)[]) {
+  return function ArticlePhoto({ photoIndex }: { photoIndex: number }) {
+    const url = photos[photoIndex]
+    if (!url) return null
+    return (
+      <div className="relative w-full aspect-video rounded-2xl overflow-hidden my-8 shadow-md">
+        <Image
+          src={url}
+          alt="Photo de voyage"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 700px"
+        />
+      </div>
+    )
+  }
+}
+
+function injectPhotoMarkersIntoContent(content: string): string {
+  const lines = content.split('\n')
+  const result: string[] = []
+  let h2Count = 0
+
+  for (const line of lines) {
+    if (/^## /.test(line)) {
+      h2Count++
+      if (h2Count === 2) {
+        result.push('<ArticlePhoto photoIndex={0} />')
+        result.push('')
+      } else if (h2Count === 4) {
+        result.push('<ArticlePhoto photoIndex={1} />')
+        result.push('')
+      }
+    }
+    result.push(line)
+  }
+
+  return result.join('\n')
+}
+
 const mdxComponents = {
   h2: H2,
   h3: H3,
@@ -121,10 +161,20 @@ export default async function ArticlePage({ params }: PageProps) {
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://souvenirsderoute.com'
   const articleUrl = `${SITE_URL}/articles/${article.slug}`
 
-  const heroSrc = await getUnsplashPhoto(
-    buildHeroQuery(article.ville, article.pays),
-    article.pays.toLowerCase() === 'france' ? 'france city travel' : 'europe city travel'
-  )
+  const fallback = article.pays.toLowerCase() === 'france' ? 'france city travel' : 'europe city travel'
+  const heroQuery = buildHeroQuery(article.ville, article.pays)
+  const altQuery = article.pays.toLowerCase() === 'france'
+    ? `${article.ville} France architecture paysage`
+    : `${article.ville} travel scenery`
+
+  const [heroSrc, bodyPhoto1, bodyPhoto2] = await Promise.all([
+    getUnsplashPhoto(heroQuery, fallback, 0),
+    getUnsplashPhoto(heroQuery, fallback, 1),
+    getUnsplashPhoto(altQuery, fallback, 0),
+  ])
+
+  const articleBodyPhotos = [bodyPhoto1, bodyPhoto2]
+  const enrichedContent = injectPhotoMarkersIntoContent(article.content)
 
   const headings = extractHeadings(article.content)
 
@@ -250,7 +300,13 @@ export default async function ArticlePage({ params }: PageProps) {
 
               {/* Contenu MDX */}
               <div className="prose-sophie">
-                <MDXRemote source={article.content} components={mdxComponents} />
+                <MDXRemote
+                  source={enrichedContent}
+                  components={{
+                    ...mdxComponents,
+                    ArticlePhoto: createArticlePhotoComponent(articleBodyPhotos),
+                  }}
+                />
               </div>
 
               {/* Affiliés */}
