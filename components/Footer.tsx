@@ -47,11 +47,11 @@ export default function Footer() {
               Souvenirs de Route
             </Link>
             <p className="text-sable-dark text-sm leading-relaxed mb-4">
-              Sophie, Lucas, Léa (8 ans) et Tom (5 ans). On part, on se perd parfois,
-              on rigole souvent, et on rentre avec des étoiles plein les yeux.
+              Des itinéraires testés, des adresses honnêtes,<br />
+              des conseils qui marchent vraiment.
             </p>
             <p className="text-sable-dark text-xs">
-              Blog voyage famille depuis le Sud de la France
+              Blog voyage famille
             </p>
           </div>
 
