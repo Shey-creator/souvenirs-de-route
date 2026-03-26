@@ -1,43 +1,25 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { getArticlesByCategory } from '@/lib/articles'
+import { format } from 'date-fns'
+import { fr } from 'date-fns/locale'
 
 export const metadata: Metadata = {
   title: 'Voyager malin en famille | Souvenirs de Route',
   description: 'Tous nos conseils pratiques pour voyager intelligemment en famille : SNCF, avion, applis, road trip et astuces budget.',
 }
 
-const ARTICLES = [
-  {
-    titre: 'Astuces SNCF famille : cartes, réductions et réservations',
-    description: 'Carte Famille Nombreuse, billets Ouigo, réservations à l\'avance : tout ce qu\'il faut savoir pour voyager en train avec les enfants sans se ruiner.',
-    href: '/categories/voyager-malin',
-    emoji: '🚄',
-    tags: ['SNCF', 'train', 'budget'],
-  },
-  {
-    titre: 'Prendre l\'avion avec des enfants de moins de 5 ans',
-    description: 'Poussette en cabine ou en soute ? Siège enfant ou sur les genoux ? Jouets à emporter ? On a testé tout ça avec Tom dès ses 18 mois.',
-    href: '/categories/voyager-malin',
-    emoji: '✈️',
-    tags: ['avion', 'bebe', 'conseils'],
-  },
-  {
-    titre: 'Les meilleures applis voyage famille',
-    description: 'Google Maps offline, Citymapper, TripAdvisor, Notion pour les itinéraires : les applis qu\'on utilise vraiment sur le terrain.',
-    href: '/categories/voyager-malin',
-    emoji: '📱',
-    tags: ['applis', 'organisation', 'tech'],
-  },
-  {
-    titre: 'Comment préparer un road trip avec des enfants',
-    description: 'Jeux pour la voiture, horaires de route, arrêts stratégiques, musique en voiture : notre méthode pour des trajets sans crise.',
-    href: '/categories/voyager-malin',
-    emoji: '🚗',
-    tags: ['road trip', 'voiture', 'conseils'],
-  },
-]
+const EMOJI: Record<string, string> = {
+  'astuces-sncf-famille': '🚄',
+  'avion-enfants-moins-5-ans': '✈️',
+  'meilleures-applis-voyage-famille': '📱',
+  'road-trip-famille-conseils': '🚗',
+  'pack-your-bag-voyage-famille': '🎒',
+}
 
 export default function VoyagerMalinPage() {
+  const articles = getArticlesByCategory('voyager-malin')
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
       <div className="text-center mb-12">
@@ -51,30 +33,40 @@ export default function VoyagerMalinPage() {
         </p>
       </div>
 
-      <div className="space-y-6">
-        {ARTICLES.map((article) => (
-          <Link
-            key={article.titre}
-            href={article.href}
-            className="flex gap-5 bg-white border border-sable-dark rounded-2xl p-6 hover:border-terracotta hover:shadow-md transition-all group"
-          >
-            <span className="text-4xl shrink-0">{article.emoji}</span>
-            <div className="flex-1">
-              <h2 className="font-display text-lg font-bold text-brun group-hover:text-terracotta transition-colors mb-2">
-                {article.titre}
-              </h2>
-              <p className="text-brun-muted text-sm leading-relaxed mb-3">
-                {article.description}
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                {article.tags.map((tag) => (
-                  <span key={tag} className="tag text-xs">{tag}</span>
-                ))}
+      {articles.length > 0 ? (
+        <div className="space-y-6">
+          {articles.map((article) => (
+            <Link
+              key={article.slug}
+              href={`/articles/${article.slug}`}
+              className="flex gap-5 bg-white border border-sable-dark rounded-2xl p-6 hover:border-terracotta hover:shadow-md transition-all group"
+            >
+              <span className="text-4xl shrink-0">{EMOJI[article.slug] ?? '💡'}</span>
+              <div className="flex-1 min-w-0">
+                <h2 className="font-display text-lg font-bold text-brun group-hover:text-terracotta transition-colors mb-2 line-clamp-2">
+                  {article.title}
+                </h2>
+                <p className="text-brun-muted text-sm leading-relaxed mb-3 line-clamp-2">
+                  {article.description}
+                </p>
+                <div className="flex items-center gap-3 text-xs text-brun-muted">
+                  <span>{format(new Date(article.date), 'd MMM yyyy', { locale: fr })}</span>
+                  <span>·</span>
+                  <span>{article.tempsLecture} min de lecture</span>
+                  <span className="ml-auto text-terracotta font-medium group-hover:underline">
+                    Lire →
+                  </span>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 text-brun-muted">
+          <p className="text-4xl mb-4">🔧</p>
+          <p className="font-display text-xl">Articles bientôt disponibles</p>
+        </div>
+      )}
 
       <div className="mt-12 bg-sable rounded-2xl p-8 text-center">
         <p className="text-2xl mb-3">💡</p>
