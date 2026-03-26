@@ -75,10 +75,11 @@ export default async function HomePage() {
                 🌍 Blog voyage famille depuis 2024
               </span>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brun font-bold leading-tight mb-6">
-                Les hôtels bien, les restos testés, les files d&apos;attente évitées.
+                Parce que les souvenirs de famille, ça se prépare.
               </h1>
               <p className="text-brun-muted text-lg leading-relaxed mb-8">
-                Voyager en famille, mais en mieux.
+                Des itinéraires testés, des adresses honnêtes,<br className="hidden sm:block" />
+                des conseils qui marchent vraiment.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/destinations" className="btn-primary">
