@@ -98,12 +98,7 @@ export default async function HomePage() {
       {/* DERNIERS ARTICLES */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
         <div className="flex items-end justify-between mb-8">
-          <div>
-            <p className="text-terracotta text-sm font-medium uppercase tracking-wide mb-1">
-              Les dernières aventures
-            </p>
-            <h2 className="section-title">Nos articles récents</h2>
-          </div>
+          <h2 className="section-title">Nos articles récents</h2>
           <Link
             href="/destinations"
             className="text-terracotta text-sm font-medium hover:underline hidden sm:block"
@@ -114,8 +109,8 @@ export default async function HomePage() {
 
         {latestArticles.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {latestArticles.map((article, i) => (
-              <ArticleCard key={article.slug} article={article} featured={i === 0} />
+            {latestArticles.map((article) => (
+              <ArticleCard key={article.slug} article={article} featured={true} />
             ))}
           </div>
         ) : (

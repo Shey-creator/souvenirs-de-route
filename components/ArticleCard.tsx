@@ -26,7 +26,7 @@ export default async function ArticleCard({ article, featured = false }: Article
   if (featured) {
     return (
       <Link href={`/articles/${article.slug}`} className="group block">
-        <article className="card overflow-hidden">
+        <article className="card overflow-hidden transition-transform duration-200 group-hover:-translate-y-1 group-hover:shadow-lg">
           <div className="relative aspect-[16/9]">
             {image.url ? (
               <Image
