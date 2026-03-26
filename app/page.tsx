@@ -74,14 +74,10 @@ export default async function HomePage() {
                 🌍 Blog voyage famille depuis 2024
               </span>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-brun font-bold leading-tight mb-6">
-                On part.{' '}
-                <span className="text-terracotta">On se perd.</span>{' '}
-                On adore ça.
+                Les hôtels bien, les restos testés, les files d&apos;attente évitées.
               </h1>
               <p className="text-brun-muted text-lg leading-relaxed mb-8">
-                Sophie et Lucas, leurs deux enfants Léa (8 ans) et Tom (5 ans),
-                et une envie irrépressible de montrer le monde à leurs petits.
-                Ici, on raconte les voyages comme ils se passent vraiment.
+                Voyager en famille, mais en mieux.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/destinations" className="btn-primary">
