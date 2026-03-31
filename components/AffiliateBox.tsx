@@ -6,7 +6,7 @@ interface AffiliateBoxProps {
 export default function AffiliateBox({ ville, type = 'both' }: AffiliateBoxProps) {
   const bookingUrl = `https://www.booking.com/search.html?ss=${encodeURIComponent(ville)}&aid=your_affiliate_id`
   const viatorUrl = `https://www.viator.com/search?q=${encodeURIComponent(ville)}`
-  const getyourguideUrl = `https://www.getyourguide.com/s/?q=${encodeURIComponent(ville)}`
+  const getyourguideUrl = `https://www.getyourguide.com/s/?q=${encodeURIComponent(ville)}&partner_id=3YHYTDY&utm_medium=online_publisher`
 
   return (
     <div className="my-12 space-y-5">
