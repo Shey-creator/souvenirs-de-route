@@ -6,6 +6,9 @@ import { CITIES_DATA } from '@/lib/destinations-data'
 import DestinationSections from '@/components/DestinationSections'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://souvenirsderoute.com'
 
 interface PageProps {
   params: { ville: string }
@@ -85,11 +88,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${nom} en famille : notre guide complet`,
     description: v?.teaser?.slice(0, 160) || `Nos conseils pour visiter ${nom} avec des enfants.`,
+    alternates: { canonical: `${SITE_URL}/destinations/france/${params.ville}` },
   }
 }
 
 export default async function VillePage({ params }: PageProps) {
   const villeData = villes[params.ville]
+  if (!villeData) notFound()
   const nom = villeData?.nom || params.ville.charAt(0).toUpperCase() + params.ville.slice(1)
   const region = villeData?.region
   const pays = villeData?.pays || 'France'
