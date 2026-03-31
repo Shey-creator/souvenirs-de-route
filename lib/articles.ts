@@ -36,6 +36,15 @@ export function getArticleBySlug(slug: string): Article | null {
     slug,
     content,
     tempsLecture: Math.ceil(stats.minutes),
+    // Valeurs par défaut pour les champs optionnels absents du frontmatter
+    author: data.author ?? { name: 'Sophie', avatar: '/images/sophie.jpg' },
+    tags: data.tags ?? [],
+    categories: data.categories ?? [],
+    saisonIdéale: data.saisonIdéale ?? [],
+    schema: data.schema ?? ['Article'],
+    region: data.region ?? '',
+    agesEnfants: data.agesEnfants ?? '',
+    updatedAt: data.updatedAt ?? data.date,
   }
 }
 

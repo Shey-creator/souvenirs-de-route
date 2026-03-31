@@ -126,15 +126,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: article.title,
     description: article.description,
-    keywords: article.tags,
-    authors: [{ name: article.author.name }],
+    keywords: article.tags ?? [],
+    authors: [{ name: article.author?.name ?? 'Sophie' }],
     openGraph: {
       title: article.title,
       description: article.description,
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.updatedAt,
-      authors: [article.author.name],
+      authors: [article.author?.name ?? 'Sophie'],
       images: article.heroImage
         ? [{ url: article.heroImage, width: 1200, height: 630, alt: article.heroImageAlt }]
         : [],
@@ -261,7 +261,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   <div className="w-8 h-8 rounded-full bg-fond-alt flex items-center justify-center text-xs font-bold text-brun">
                     S
                   </div>
-                  <span className="font-medium text-brun">{article.author.name}</span>
+                  <span className="font-medium text-brun">{article.author?.name ?? 'Sophie'}</span>
                 </div>
                 <span>
                   Publié le {format(new Date(article.date), 'd MMMM yyyy', { locale: fr })}
@@ -320,7 +320,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 <div>
                   <p className="text-xs text-brun-muted uppercase tracking-wide mb-3">Tags</p>
                   <div className="flex flex-wrap gap-2">
-                    {article.tags.map((tag) => (
+                    {(article.tags ?? []).map((tag) => (
                       <span key={tag} className="tag text-xs">{tag}</span>
                     ))}
                   </div>
