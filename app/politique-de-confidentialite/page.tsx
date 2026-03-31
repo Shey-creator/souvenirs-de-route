@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Politique de confidentialité | Souvenirs de Route',
   description: 'Politique de confidentialité et gestion des données personnelles du blog Souvenirs de Route.',
+  robots: { index: false, follow: false },
 }
 
 export default function PolitiqueConfidentialitePage() {

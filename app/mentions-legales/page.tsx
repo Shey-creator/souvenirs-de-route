@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Mentions légales | Souvenirs de Route',
   description: 'Mentions légales du blog Souvenirs de Route, blog voyage famille.',
+  robots: { index: false, follow: false },
 }
 
 export default function MentionsLegalesPage() {

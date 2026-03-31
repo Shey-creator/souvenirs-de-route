@@ -54,8 +54,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/categories/pack-your-bag`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/travailler-avec-nous`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
     { url: `${SITE_URL}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${SITE_URL}/mentions-legales`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${SITE_URL}/politique-de-confidentialite`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
   ]
 
   return [...staticUrls, ...franceCityUrls, ...europeCityUrls, ...articleUrls]
