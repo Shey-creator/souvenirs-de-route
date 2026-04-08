@@ -78,6 +78,39 @@ const CITY_PLACE_QUERY: Record<string, string> = {
   porto: 'Porto Dom Luis bridge',
 }
 
+// Requetes specifiques pour les articles conseils/equipement (ville: "Général")
+const CONSEIL_ARTICLE_QUERIES: Record<string, string> = {
+  'meilleure-poussette-voyage': 'baby stroller travel airport',
+  'meilleures-valises-enfant-voyage': 'kids luggage travel suitcase',
+  'meilleur-casque-audio-enfant-avion': 'child headphones airplane',
+  'meilleur-sac-a-dos-enfant-voyage': 'kids backpack travel',
+  'meilleurs-jeux-voyage-famille': 'family road trip games kids car',
+  'organiser-vacances-famille-methode': 'family travel planning map',
+  'alimentation-bebe-voyage-conseils': 'baby food travel family',
+  'premier-voyage-bebe-conseils': 'baby travel family vacation',
+  'activites-enfant-avion-voiture': 'kids airplane window travel',
+  'avion-enfants-moins-5-ans': 'children airplane travel family',
+  'road-trip-famille-conseils': 'family road trip car driving',
+  'astuces-sncf-famille': 'family train travel kids',
+  'budget-voyage-famille-conseils': 'family travel budget planning',
+  'assurance-voyage-famille-choisir': 'family travel documents passport',
+  'meilleures-cartes-bancaires-voyage-famille': 'travel credit card wallet',
+  'pack-your-bag-voyage-famille': 'travel packing luggage family',
+  'siege-auto-voyage-avion-location': 'child car seat travel',
+  'trousse-medicale-voyage-famille': 'travel first aid kit medical',
+  'vetements-voyage-enfant-liste': 'kids travel clothes packing',
+  'meilleures-applis-voyage-famille': 'smartphone navigation travel map',
+}
+
+/**
+ * Requete hero pour un article. Utilise le mapping slug en priorite
+ * pour les articles conseils/equipement, puis delègue à buildHeroQuery.
+ */
+export function buildArticleHeroQuery(slug: string, ville: string, pays: string): string {
+  if (CONSEIL_ARTICLE_QUERIES[slug]) return CONSEIL_ARTICLE_QUERIES[slug]
+  return buildHeroQuery(ville, pays)
+}
+
 /**
  * Requete LIEU pour les heroes d'articles et destinations.
  * Utilise le monument/quartier iconique de la ville si connu,
