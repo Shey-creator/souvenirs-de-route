@@ -1,0 +1,173 @@
+# Souvenirs de Route
+> Blog de voyage en famille par Sophie. Itinéraires testés, guides de destinations et conseils pratiques pour voyager en France et en Europe avec des enfants de 3 à 12 ans.
+
+## Pages principales
+- /
+- /destinations
+- /a-propos
+- /contact
+- /carte
+- /mentions-legales
+- /politique-de-confidentialite
+- /travailler-avec-nous
+- /sitemap.xml
+- /robots.txt
+
+## Catégories
+- /categories/voyager-malin
+- /categories/vacances-scolaires
+
+## Destinations France
+- /destinations/france/paris
+- /destinations/france/nice
+- /destinations/france/marseille
+- /destinations/france/bordeaux
+- /destinations/france/lyon
+- /destinations/france/strasbourg
+- /destinations/france/nantes
+- /destinations/france/montpellier
+- /destinations/france/annecy
+- /destinations/france/chamonix
+- /destinations/france/avignon
+- /destinations/france/aix-en-provence
+- /destinations/france/arles
+- /destinations/france/nimes
+- /destinations/france/sete
+- /destinations/france/gordes
+- /destinations/france/les-baux-de-provence
+- /destinations/france/colmar
+- /destinations/france/saint-malo
+- /destinations/france/mont-saint-michel
+- /destinations/france/biarritz
+- /destinations/france/carcassonne
+- /destinations/france/dijon
+- /destinations/france/cannes
+- /destinations/france/antibes
+- /destinations/france/menton
+
+## Destinations Europe
+- /destinations/europe/barcelone
+- /destinations/europe/rome
+- /destinations/europe/amsterdam
+- /destinations/europe/lisbonne
+- /destinations/europe/londres
+- /destinations/europe/berlin
+- /destinations/europe/prague
+- /destinations/europe/budapest
+- /destinations/europe/vienne
+- /destinations/europe/bruges
+- /destinations/europe/porto
+- /destinations/europe/seville
+- /destinations/europe/valence
+- /destinations/europe/edimbourg
+- /destinations/europe/copenhague
+- /destinations/europe/tallinn
+- /destinations/europe/ljubljana
+- /destinations/europe/dubrovnik
+- /destinations/europe/malte
+- /destinations/europe/reykjavik
+
+## Articles — Destinations France
+- /articles/paris-famille-4-jours-essentiel
+- /articles/paris-enfants-5-jours
+- /articles/paris-activites-enfants-insolites
+- /articles/nice-en-famille-3-jours
+- /articles/nice-enfants-3-jours
+- /articles/marseille-enfants-week-end
+- /articles/bordeaux-famille-miroir-eau
+- /articles/bordeaux-gironde-activites-enfants
+- /articles/lyon-famille-week-end-gastronomie
+- /articles/strasbourg-noel-famille
+- /articles/annecy-famille-lac-velo
+- /articles/chamonix-famille-montagne
+- /articles/avignon-famille-palais-des-papes
+- /articles/aix-en-provence-famille
+- /articles/arles-famille-camargue
+- /articles/nimes-enfants-histoire-vivante
+- /articles/sete-famille-week-end
+- /articles/gordes-provence-famille
+- /articles/les-baux-de-provence-famille
+- /articles/colmar-famille-alsace
+- /articles/saint-malo-famille-remparts
+- /articles/mont-saint-michel-famille-marees
+- /articles/biarritz-famille-surf
+- /articles/carcassonne-enfants-2-jours
+- /articles/dijon-famille-bourgogne
+- /articles/que-faire-cannes-enfants
+- /articles/antibes-juan-les-pins-famille
+- /articles/menton-famille-sejour
+- /articles/monaco-famille-journee
+- /articles/que-faire-montpellier-enfants-3-jours
+
+## Articles — Régions France
+- /articles/alsace-activites-enfants
+- /articles/bretagne-activites-enfants
+- /articles/cote-azur-activites-enfants
+- /articles/normandie-activites-enfants
+- /articles/occitanie-activites-enfants
+- /articles/provence-activites-enfants
+- /articles/pays-loire-vendee-enfants
+- /articles/shopping-cote-azur-famille
+- /articles/week-end-alsace-famille
+- /articles/week-end-bretagne-famille
+- /articles/week-end-nord-france-famille
+- /articles/week-end-sud-est-famille
+- /articles/week-end-sud-ouest-famille
+
+## Articles — Destinations Europe
+- /articles/barcelone-activites-enfants-complet
+- /articles/barcelone-famille-4-jours
+- /articles/barcelone-enfants-4-jours
+- /articles/rome-activites-enfants-complet
+- /articles/rome-famille-histoire-vivante
+- /articles/amsterdam-activites-enfants-complet
+- /articles/amsterdam-famille-canaux-velos
+- /articles/lisbonne-activites-enfants-complet
+- /articles/lisbonne-famille-trams
+- /articles/londres-activites-enfants-complet
+- /articles/londres-famille-4-jours
+- /articles/berlin-activites-enfants-complet
+- /articles/berlin-famille-histoire
+- /articles/prague-activites-enfants-complet
+- /articles/prague-famille-vieille-ville
+- /articles/budapest-activites-enfants-complet
+- /articles/budapest-famille-thermes-danube
+- /articles/vienne-activites-enfants-complet
+- /articles/vienne-famille-schonbrunn
+- /articles/bruges-chocolat-famille
+- /articles/porto-famille-douro
+- /articles/seville-flamenco-famille
+- /articles/valence-cite-arts-famille
+- /articles/edimbourg-famille-chateau
+- /articles/copenhague-activites-enfants-complet
+- /articles/copenhague-famille-lego
+- /articles/tallinn-famille-medieval
+- /articles/ljubljana-famille-slovenie
+- /articles/dubrovnik-famille-croatie
+- /articles/malte-famille-histoire
+- /articles/reykjavik-activites-enfants-complet
+- /articles/reykjavik-famille-islande
+
+## Articles — Conseils pratiques
+- /articles/organiser-vacances-famille-methode
+- /articles/road-trip-famille-conseils
+- /articles/budget-voyage-famille-conseils
+- /articles/premier-voyage-bebe-conseils
+- /articles/avion-enfants-moins-5-ans
+- /articles/activites-enfant-avion-voiture
+- /articles/astuces-sncf-famille
+- /articles/meilleures-applis-voyage-famille
+- /articles/meilleures-cartes-bancaires-voyage-famille
+- /articles/assurance-voyage-famille-choisir
+- /articles/pack-your-bag-voyage-famille
+- /articles/vetements-voyage-enfant-liste
+
+## Articles — Équipement bébé & enfant
+- /articles/meilleure-poussette-voyage
+- /articles/meilleur-casque-audio-enfant-avion
+- /articles/meilleur-sac-a-dos-enfant-voyage
+- /articles/meilleures-valises-enfant-voyage
+- /articles/meilleurs-jeux-voyage-famille
+- /articles/siege-auto-voyage-avion-location
+- /articles/trousse-medicale-voyage-famille
+- /articles/alimentation-bebe-voyage-conseils

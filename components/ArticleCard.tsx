@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Article } from '@/types'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { fetchUnsplashImage, buildHeroQuery } from '@/lib/unsplash'
+import { fetchUnsplashImage, buildArticleHeroQuery } from '@/lib/unsplash'
 
 interface ArticleCardProps {
   article: Article
@@ -18,7 +18,7 @@ const budgetLabel: Record<string, string> = {
 
 export default async function ArticleCard({ article, featured = false }: ArticleCardProps) {
   const image = await fetchUnsplashImage(
-    buildHeroQuery(article.ville, article.pays),
+    buildArticleHeroQuery(article.slug, article.ville, article.pays),
     featured ? 'landscape' : 'squarish',
     article.pays.toLowerCase() === 'france' ? 'france family travel' : 'europe family travel'
   )
